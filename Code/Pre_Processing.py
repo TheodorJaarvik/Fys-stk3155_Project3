@@ -15,8 +15,8 @@ class Processing:
         return filtered_df
 
 
-df1 = pd.read_csv('../data/fake.csv')
-df2 = pd.read_csv('../data/true.csv')
+df1 = pd.read_csv('data/fake.csv')
+df2 = pd.read_csv('data/true.csv')
 
 df_filtered = Processing(df1).process()
 df_filtered['label'] = 0
@@ -26,7 +26,7 @@ df_filtered_true['label'] = 1
 df_final = pd.concat([df_filtered, df_filtered_true])
 df_final = df_final.sample(frac=1).reset_index(drop=True)
 
-df_final.to_csv('../data/df_final.csv', index=False)
+df_final.to_csv('data/df_final.csv', index=False)
 
 
 
