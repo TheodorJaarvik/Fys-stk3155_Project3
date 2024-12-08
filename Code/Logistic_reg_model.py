@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-df_final = pd.read_csv('../data/df_final.csv')
+df_final = pd.read_csv('data/df_final.csv')
 
 X = df_final['text']
 y = df_final['label']
