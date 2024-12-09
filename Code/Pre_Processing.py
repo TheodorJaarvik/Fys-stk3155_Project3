@@ -15,8 +15,8 @@ class Processing:
         return filtered_df
 
 
-df1 = pd.read_csv('data/fake.csv')
-df2 = pd.read_csv('data/true.csv')
+df1 = pd.read_csv('../data/fake.csv')
+df2 = pd.read_csv('../data/true.csv')
 
 df_filtered = Processing(df1).process()
 df_filtered['label'] = 0
