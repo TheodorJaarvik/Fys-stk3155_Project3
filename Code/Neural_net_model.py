@@ -191,6 +191,7 @@ if __name__ == "__main__":
         classifier.evaluate_neural_network()
         classifier.evaluate_model_comprehensively(classifier.y_test, classifier.y_pred_nn, classifier.y_pred_nn_prob, model_name="Neural Network")
         classifier.plot_roc_curve()
+        classifier.model.save('nn_fake_news_classifier.keras')
 
         # Decision Tree
         classifier.train_decision_tree()
