@@ -4,16 +4,16 @@ from keras.src.models import Sequential
 from keras.src.layers import Dense
 from keras.src.optimizers import SGD, Adam
 from keras.src.utils import to_categorical
-from sklearn.calibration import calibration_curve
 from sklearn.linear_model import LogisticRegression
+from sklearn.utils import resample
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, auc, matthews_corrcoef, \
-    precision_recall_curve, log_loss
+from sklearn.metrics import accuracy_score, confusion_matrix, roc_curve, auc
 import matplotlib.pyplot as plt
 from joblib import dump
 import seaborn as sns
+
 
 
 class TextClassifier:
@@ -103,8 +103,6 @@ class TextClassifier:
         self.dt.fit(self.X_train_tfidf, self.y_train)
         self.y_pred_dt = self.dt.predict(self.X_test_tfidf)
 
-        self._print_metrics(self.y_test, self.y_pred_dt, model_name="Decision Tree")
-
     def save_model(self, file_path):
         if file_path == '../Models/lr_fake_news_classifier.joblib':
             dump(self.lr, file_path)
@@ -138,6 +136,35 @@ class TextClassifier:
         plt.ylabel('Actual')
         plt.title(f'Confusion Matrix - {model_name}')
         plt.show()
+
+    def bootstrap(self, model_name, model, num_bootstraps, num_samples):
+        # Bootstrap resampling
+        accuracy_bootstraps = []
+
+        for i in range(num_bootstraps):
+            X_test_bootstrap, y_test_bootstrap = resample(self.X_test_tfidf, self.y_test, replace=True, n_samples=num_samples, random_state=i)
+
+            # Evaluate models on bootstrap sample
+            if model_name == 'Logistic Regression':
+                y_pred_lr_bootstrap = model.predict(X_test_bootstrap)
+                accuracy_lr_bootstrap = accuracy_score(y_test_bootstrap, y_pred_lr_bootstrap)
+                accuracy_bootstraps.append(accuracy_lr_bootstrap)
+
+            elif model_name == 'Neural Network':
+                y_pred_nn_bootstrap = model.predict(X_test_bootstrap)
+                y_pred_nn_bootstrap_binary = np.argmax(y_pred_nn_bootstrap, axis=1)
+                accuracy_nn_bootstrap = accuracy_score(y_test_bootstrap, y_pred_nn_bootstrap_binary)
+                accuracy_bootstraps.append(accuracy_nn_bootstrap)
+
+            elif model_name == 'Decision Tree':
+                y_pred_dt_bootstrap = model.predict(X_test_bootstrap)
+                accuracy_dt_bootstrap = accuracy_score(y_test_bootstrap, y_pred_dt_bootstrap)
+                accuracy_bootstraps.append(accuracy_dt_bootstrap)
+
+        # Calculate average accuracy over bootstraps
+        accuracy_avg = np.mean(accuracy_bootstraps)
+        return accuracy_avg
+
 
 
 

@@ -10,16 +10,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, BaggingClassifier, GradientBoostingClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.optimizers import SGD, Adam
-from tensorflow.keras.utils import to_categorical
+from keras.src.models import Sequential
+from keras.src.layers import Dense
+from keras.src.optimizers import SGD, Adam
+from keras.src.utils import to_categorical
 
 # Load fake news data
-fake = pd.read_csv('fake.csv')
+fake = pd.read_csv('../data/fake.csv')
 
 # Load true news data
-true = pd.read_csv('true.csv')
+true = pd.read_csv('../data/true.csv')
 
 fake['label'] = 0
 true['label'] = 1

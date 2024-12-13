@@ -1,3 +1,5 @@
+import os
+
 from Neural_net_model import TextClassifier
 from Pre_Processing import Processing
 
@@ -9,6 +11,9 @@ if __name__ == "__main__":
     classifier = TextClassifier('../data/df_final.csv')
 
     try:
+        createfolder = '../Models'
+        if not os.path.exists(createfolder):
+            os.makedirs(createfolder)
         classifier.vectorize_text()
 
         # Logistic Regression
