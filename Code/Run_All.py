@@ -1,4 +1,5 @@
 import os
+import runpy
 
 from Neural_net_model import TextClassifier
 from Pre_Processing import Processing
@@ -28,5 +29,9 @@ if __name__ == "__main__":
         # Decision Tree
         classifier.train_decision_tree()
         classifier.save_model('../Models/dt_fake_news_classifier.joblib')
+
+        # Model Testing
+        runpy.run_module('Model_Testing')
+
     except Exception as e:
         print(f"An error occurred: {e}")

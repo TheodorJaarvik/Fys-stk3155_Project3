@@ -98,7 +98,7 @@ class TextClassifier:
 
        # Training the decision tree
 
-        self.dt = DecisionTreeClassifier(max_depth=8)
+        self.dt = DecisionTreeClassifier(max_depth=10, min_samples_leaf=5)
         self.dt.fit(self.X_train_tfidf, self.y_train)
         self.y_pred_dt = self.dt.predict(self.X_test_tfidf)
 

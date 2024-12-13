@@ -33,11 +33,9 @@ classification_report_lr = classification_report(data.y_test, y_pred_lr)
 roc_auc_lr = roc_auc_score(data.y_test, y_pred_lr)
 print(f'Logistic Regression ROC AUC: {roc_auc_lr:.2f}')
 print(classification_report_lr)
-
 y_prob_lr = lr_model.predict_proba(data.X_test_tfidf)[:,1]
 
 # Plots
-
 data.plot_roc_curve(model_name="Logistic Regression", y_pred_prob=y_prob_lr)
 data.plot_confusion_matrix(model_name="Logistic Regression", y_pred=y_pred_lr)
 
