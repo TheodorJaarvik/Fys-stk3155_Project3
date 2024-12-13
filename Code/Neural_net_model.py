@@ -50,9 +50,6 @@ class TextClassifier:
         self.lr.fit(self.X_train_tfidf, self.y_train)
         self.y_pred_lr = self.lr.predict(self.X_test_tfidf)
 
-        self.accuracy_lr = accuracy_score(self.y_test, self.y_pred_lr)
-        print(f'Logistic Regression Accuracy: {self.accuracy_lr:.2f}')
-
 
 
     def vectorize_text(self):
@@ -62,6 +59,8 @@ class TextClassifier:
         self.vectorizer = TfidfVectorizer(stop_words='english', max_df=0.7)
         self.X_train_tfidf = self.vectorizer.fit_transform(self.X_train)
         self.X_test_tfidf = self.vectorizer.transform(self.X_test)
+
+        # removing the 'reuters' feature
 
         '''feature_names = self.vectorizer.get_feature_names_out()
         indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters']

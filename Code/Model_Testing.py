@@ -15,7 +15,7 @@ dt_model = load('../Models/dt_fake_news_classifier.joblib')
 data = TextClassifier('../data/df_final.csv')
 data.vectorize_text()
 
-num_bootstraps = 10
+num_bootstraps = 20
 
 print('------------------------Logistic Regression------------------------')
 
@@ -80,7 +80,8 @@ print(f'Decision Tree ROC AUC: {roc_auc_dt:.2f}')
 print(classification_report_dt)
 
 # Plots
-data.plot_roc_curve(model_name="Decision Tree", y_pred_prob=y_pred_dt)
+y_prob_dt = dt_model.predict_proba(data.X_test_tfidf)[:,1]
+data.plot_roc_curve(model_name="Decision Tree", y_pred_prob=y_prob_dt)
 data.plot_confusion_matrix(model_name="Decision Tree", y_pred=y_pred_dt)
 
 # Tree Plot
