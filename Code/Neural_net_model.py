@@ -5,12 +5,14 @@ from keras.src.layers import Dense
 from keras.src.optimizers import SGD, Adam
 from keras.src.utils import to_categorical
 from sklearn.calibration import calibration_curve
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, auc, matthews_corrcoef, \
     precision_recall_curve, log_loss
 import matplotlib.pyplot as plt
+from joblib import dump
 
 
 class TextClassifier:
@@ -39,6 +41,19 @@ class TextClassifier:
             self.X, self.y, test_size=self.test_size, stratify=self.y, random_state=self.random_state
         )
 
+    def logistic_regression(self):
+
+        # Training a Logistic Regression model
+
+        self.lr = LogisticRegression(max_iter=1000)
+        self.lr.fit(self.X_train_tfidf, self.y_train)
+        self.y_pred_lr = self.lr.predict(self.X_test_tfidf)
+
+        self.accuracy_lr = accuracy_score(self.y_test, self.y_pred_lr)
+        print(f'Logistic Regression Accuracy: {self.accuracy_lr:.2f}')
+
+
+
     def vectorize_text(self):
 
         # vectorizing the text
@@ -46,6 +61,11 @@ class TextClassifier:
         self.vectorizer = TfidfVectorizer(stop_words='english', max_df=0.7)
         self.X_train_tfidf = self.vectorizer.fit_transform(self.X_train)
         self.X_test_tfidf = self.vectorizer.transform(self.X_test)
+
+        '''feature_names = self.vectorizer.get_feature_names_out()
+        indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters']
+        self.X_train_tfidf = self.X_train_tfidf[:, indices_to_keep]
+        self.X_test_tfidf = self.X_test_tfidf[:, indices_to_keep]'''
 
     def build_neural_network(self, activation='relu', optimizer='adam'):
 
@@ -102,7 +122,7 @@ class TextClassifier:
 
        # Training the decision tree
 
-        self.dt = DecisionTreeClassifier()
+        self.dt = DecisionTreeClassifier(max_depth=8)
         self.dt.fit(self.X_train_tfidf, self.y_train)
         self.y_pred_dt = self.dt.predict(self.X_test_tfidf)
 
@@ -176,26 +196,13 @@ class TextClassifier:
         plt.title(f'Calibration Curve - {model_name}')
         plt.show()
 
+    def save_model(self, file_path):
+        if file_path == '../Models/lr_fake_news_classifier.joblib':
+            dump(self.lr, file_path)
+        elif file_path == '../Models/dt_fake_news_classifier.joblib':
+            dump(self.dt, file_path)
+        else:
+            self.model.save(file_path)
 
 
-# Usage
-if __name__ == "__main__":
-    classifier = TextClassifier('../data/df_final.csv')
 
-    try:
-        classifier.vectorize_text()
-
-        # Neural Network
-        classifier.build_neural_network()
-        classifier.train_neural_network()
-        classifier.evaluate_neural_network()
-        classifier.evaluate_model_comprehensively(classifier.y_test, classifier.y_pred_nn, classifier.y_pred_nn_prob, model_name="Neural Network")
-        classifier.plot_roc_curve()
-        classifier.model.save('nn_fake_news_classifier.keras')
-
-        # Decision Tree
-        classifier.train_decision_tree()
-        classifier.plot_roc_curve_dt()
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
