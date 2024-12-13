@@ -13,6 +13,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
     precision_recall_curve, log_loss
 import matplotlib.pyplot as plt
 from joblib import dump
+import seaborn as sns
 
 
 class TextClassifier:
@@ -93,30 +94,6 @@ class TextClassifier:
         self.y_train_nn = to_categorical(self.y_train)
         self.model.fit(self.X_train_tfidf, self.y_train_nn, epochs=epochs, batch_size=batch_size, verbose=1)
 
-    def evaluate_neural_network(self):
-
-        # evaluating the neural network using the test data
-
-        self.y_pred_nn_prob = self.model.predict(self.X_test_tfidf)
-        self.y_pred_nn = np.argmax(self.y_pred_nn_prob, axis=1)
-
-        self._print_metrics(self.y_test, self.y_pred_nn, model_name="Neural Network")
-
-    def plot_roc_curve(self, model_name="Neural Network"):
-
-        # Plotting the ROC curve for the neural network
-
-        fpr, tpr, thresholds = roc_curve(self.y_test, self.y_pred_nn_prob[:, 1])
-        roc_auc = auc(fpr, tpr)
-
-        plt.figure()
-        plt.plot(fpr, tpr, label=f'{model_name} (AUC = {roc_auc:.2f})')
-        plt.plot([0, 1], [0, 1], 'r--')
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title(f'ROC Curve - {model_name}')
-        plt.legend(loc='lower right')
-        plt.show()
 
     def train_decision_tree(self):
 
@@ -128,74 +105,6 @@ class TextClassifier:
 
         self._print_metrics(self.y_test, self.y_pred_dt, model_name="Decision Tree")
 
-    def plot_roc_curve_dt(self):
-
-        # Plotting the ROC curve for the desision tree
-
-        if hasattr(self.dt, "predict_proba"):
-            y_prob_dt = self.dt.predict_proba(self.X_test_tfidf)[:, 1]
-        else:
-            raise AttributeError("Decision Tree does not support probability predictions.")
-
-        fpr, tpr, thresholds = roc_curve(self.y_test, y_prob_dt)
-        roc_auc = auc(fpr, tpr)
-
-        plt.figure()
-        plt.plot(fpr, tpr, label=f'Decision Tree (AUC = {roc_auc:.2f})')
-        plt.plot([0, 1], [0, 1], 'r--')
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('ROC Curve - Decision Tree')
-        plt.legend(loc='lower right')
-        plt.show()
-
-    def _print_metrics(self, y_true, y_pred, model_name="Model"):
-
-        # Accuracy, confusion matrix and classification report
-
-        accuracy = accuracy_score(y_true, y_pred)
-        print(f'{model_name} Accuracy: {accuracy:.2f}')
-        print('Confusion Matrix:')
-        print(confusion_matrix(y_true, y_pred))
-        print('Classification Report:')
-        print(classification_report(y_true, y_pred))
-
-    def evaluate_model_comprehensively(self, y_true, y_pred, y_probs, model_name="Model"):
-
-        # Evaluating the model, by accuracy, precision, recall, f1, specificity, mcc, logloss, precision-recall auc and calibration curve
-
-        print(f"Evaluating {model_name}...")
-
-        # Accuracy, Precision, Recall, F1
-        self._print_metrics(y_true, y_pred, model_name)
-
-        # Specificity
-        tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-        specificity = tn / (tn + fp)
-        print(f"Specificity: {specificity:.2f}")
-
-        # MCC
-        mcc = matthews_corrcoef(y_true, y_pred)
-        print(f"Matthews Correlation Coefficient: {mcc:.2f}")
-
-        # Log Loss
-        logloss = log_loss(y_true, y_probs)
-        print(f"Log Loss: {logloss:.2f}")
-
-        # Precision-Recall AUC
-        precision, recall, _ = precision_recall_curve(y_true, y_probs[:, 1])
-        auc_pr = auc(recall, precision)
-        print(f"Precision-Recall AUC: {auc_pr:.2f}")
-
-        # Calibration Curve
-        prob_true, prob_pred = calibration_curve(y_true, y_probs[:, 1], n_bins=10)
-        plt.plot(prob_pred, prob_true, marker='o')
-        plt.plot([0, 1], [0, 1], linestyle='--', color='gray')
-        plt.xlabel('Mean Predicted Probability')
-        plt.ylabel('Fraction of Positives')
-        plt.title(f'Calibration Curve - {model_name}')
-        plt.show()
-
     def save_model(self, file_path):
         if file_path == '../Models/lr_fake_news_classifier.joblib':
             dump(self.lr, file_path)
@@ -203,6 +112,34 @@ class TextClassifier:
             dump(self.dt, file_path)
         else:
             self.model.save(file_path)
+
+    def plot_roc_curve(self, model_name, y_pred_prob):
+
+        # Plotting the ROC curve for the neural network
+
+        fpr, tpr, thresholds = roc_curve(self.y_test, y_pred_prob)
+        roc_auc = auc(fpr, tpr)
+
+        plt.figure()
+        plt.plot(fpr, tpr, label=f'{model_name} (AUC = {roc_auc:.2f})')
+        plt.plot([0, 1], [0, 1], 'r--')
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title(f'ROC Curve - {model_name}')
+        plt.legend(loc='lower right')
+        plt.show()
+
+    def plot_confusion_matrix(self, model_name, y_pred):
+
+        conf_matrix = confusion_matrix(self.y_test, y_pred)
+        plt.figure()
+        sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d')
+        plt.xlabel('Predicted')
+        plt.ylabel('Actual')
+        plt.title(f'Confusion Matrix - {model_name}')
+        plt.show()
+
+
 
 
 

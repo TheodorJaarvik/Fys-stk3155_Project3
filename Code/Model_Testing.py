@@ -1,7 +1,7 @@
 import keras
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
+from sklearn.metrics import accuracy_score, classification_report, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
 from Neural_net_model import TextClassifier
 from sklearn.utils import resample
@@ -38,6 +38,13 @@ print(f'Logistic Regression ROC AUC: {roc_auc_lr:.2f}')
 print(classification_report_lr)
 
 
+# Plots
+
+data.plot_roc_curve(model_name="Logistic Regression", y_pred_prob=y_pred_lr)
+data.plot_confusion_matrix(model_name="Logistic Regression", y_pred=y_pred_lr)
+
+
+
 print('------------------------Neural Network------------------------')
 
 y_pred_nn = nn_model.predict(data.X_test_tfidf)
@@ -54,6 +61,11 @@ classification_report_nn = classification_report(data.y_test, y_pred_nn_binary)
 roc_auc_nn = roc_auc_score(data.y_test, y_pred_nn_binary)
 print(f'Neural Network ROC AUC: {roc_auc_nn:.2f}')
 print(classification_report_nn)
+
+# Plots
+
+data.plot_roc_curve(model_name="Neural Network", y_pred_prob=y_pred_nn_binary)
+data.plot_confusion_matrix(model_name="Neural Network", y_pred=y_pred_nn_binary)
 
 
 print('------------------------Decision Tree------------------------')
@@ -73,7 +85,12 @@ roc_auc_dt = roc_auc_score(data.y_test, y_pred_dt)
 print(f'Decision Tree ROC AUC: {roc_auc_dt:.2f}')
 print(classification_report_dt)
 
-# Plotting Decision Tree
+# Plots
+
+data.plot_roc_curve(model_name="Decision Tree", y_pred_prob=y_pred_dt)
+data.plot_confusion_matrix(model_name="Decision Tree", y_pred=y_pred_dt)
+
+# Tree Plot
 plot_tree(dt_model, feature_names=data.vectorizer.get_feature_names_out(), class_names=['Class 0', 'Class 1'], filled=True)
 plt.show()
 
