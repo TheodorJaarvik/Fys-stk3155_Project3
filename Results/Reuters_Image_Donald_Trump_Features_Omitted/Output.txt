@@ -1,8 +1,23 @@
+/Library/Frameworks/Python.framework/Versions/3.11/bin/python3 /Users/theodorjaarvik/Documents/IToslomet/Fys-stk3155_Project3/Code/Run_All.py 
+2024-12-14 15:41:12.350753: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/layers/core/dense.py:87: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+Epoch 1/5
+562/562 ━━━━━━━━━━━━━━━━━━━━ 66s 116ms/step - accuracy: 0.9425 - loss: 0.2720
+Epoch 2/5
+562/562 ━━━━━━━━━━━━━━━━━━━━ 67s 119ms/step - accuracy: 0.9981 - loss: 0.0121
+Epoch 3/5
+562/562 ━━━━━━━━━━━━━━━━━━━━ 67s 119ms/step - accuracy: 1.0000 - loss: 0.0028
+Epoch 4/5
+562/562 ━━━━━━━━━━━━━━━━━━━━ 69s 122ms/step - accuracy: 0.9999 - loss: 0.0013
+Epoch 5/5
+562/562 ━━━━━━━━━━━━━━━━━━━━ 68s 121ms/step - accuracy: 1.0000 - loss: 7.0994e-04
 ------------------------Logistic Regression------------------------
-Logistic Regression Accuracy (without bootstrapping): 0.9789532293986637
+Logistic Regression Accuracy (without bootstrapping): 0.9800668151447661
 Logistic Regression Average Accuracy over 20 Bootstraps: 0.98
-Logistic Regression Cross Validation Score: [0.96213808 0.96937639 0.95657016 0.96046771 0.96158129]
-Logistic Regression Cross Validation Score: 0.96
+Logistic Regression Cross Validation Score: [0.9688196  0.95601336 0.96380846 0.96826281 0.96826281]
+Logistic Regression Cross Validation Score: 0.97
 Logistic Regression ROC AUC: 0.98
               precision    recall  f1-score   support
 
@@ -14,32 +29,42 @@ Logistic Regression ROC AUC: 0.98
 weighted avg       0.98      0.98      0.98      8980
 
 Top 10 Positive Features (drive prediction towards class 1):
-trumprussia: 13.112949
-washhere: 9.664751
-wedgies: 9.065699
-thurlow: 8.187230
-tudors: 8.094889
-frida: 7.564255
-mondale: 7.115858
-statemassachusetts: 5.979709
-miniskirts: 5.800314
-spokes: 5.502649
+trumprussia: 12.199689
+washhere: 9.482735
+wedisrupt: 8.724881
+thurmond: 8.355876
+tudorel: 7.851151
+frida: 7.120443
+mondaiale: 6.833147
+statemassachusetts: 5.874512
+minispeech: 5.702729
+spokes: 5.331005
 
 Top 10 Negative Features (drive prediction towards class 0):
-jussi: -7.613423
-america: -6.217786
-gootkin: -6.154113
-don: -5.753569
-obadiah: -5.637075
-likability: -5.237268
-hillarious: -5.185504
-doesn: -5.169985
-didn: -5.076453
-imagery: -4.985170
-
+jussi: -7.444893
+america: -6.112844
+gootkin: -5.784245
+obadiah: -5.584324
+don: -5.436159
+doesn: -5.011661
+likability: -4.985960
+imagery: -4.965179
+hillarious: -4.870161
+didn: -4.848160
 ------------------------Neural Network------------------------
 281/281 ━━━━━━━━━━━━━━━━━━━━ 3s 12ms/step
-Neural Network Accuracy (without bootstrapping): 0.9907572383073496
+Neural Network Accuracy (without bootstrapping): 0.9899777282850779
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 1s 17ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 14ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 14ms/step
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
@@ -47,19 +72,8 @@ Neural Network Accuracy (without bootstrapping): 0.9907572383073496
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
 32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
-32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 13ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
 Neural Network Average Accuracy over 20 Bootstraps: 0.99
 Neural Network ROC AUC: 0.99
               precision    recall  f1-score   support
@@ -75,77 +89,71 @@ weighted avg       0.99      0.99      0.99      8980
   warnings.warn("Your TensorFlow version is newer than 2.4.0 and so graph support has been removed in eager mode and some static graphs may not be supported. See PR #1483 for discussion.")
 /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
 Expected: input_layer
-Received: inputs=['Tensor(shape=(15, 204006))']
+Received: inputs=['Tensor(shape=(15, 204090))']
   warnings.warn(msg)
 /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
 Expected: input_layer
-Received: inputs=['Tensor(shape=(30, 204006))']
+Received: inputs=['Tensor(shape=(30, 204090))']
   warnings.warn(msg)
 /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
 Expected: input_layer
-Received: inputs=['Tensor(shape=(100, 204006))']
+Received: inputs=['Tensor(shape=(100, 204090))']
   warnings.warn(msg)
-
 Top 10 Important Features - Towards class True:
-wedgies: 0.000000
-frau: 0.000000
-provacative: 0.000000
-partyrun: 0.000000
-republic7: 0.000000
-showimage: 0.000000
-pennlive: 0.000000
-stehman: 0.000000
-tooisrael: 0.000000
-steakhouses: 0.000000
-
+boiler: 0.000000
+radicalturned: 0.000000
+trumprussia: 0.000000
+acr: 0.000000
+pbsthe: 0.000000
+plywood: 0.000000
+sporadic: 0.000000
+evangelistic: 0.000000
+uncaring: 0.000000
+current: 0.000000
 Bottom 10 Important Features - Towards class False:
-guven: -0.000000
-makati: -0.000000
-voterless: -0.000000
-frida: -0.000000
-foreignowned: -0.000000
-clinton: -0.000000
-sped: -0.000000
-stupefying: -0.000000
-jussi: -0.000000
-america: -0.000000
-
+newport: -0.000000
+russelldrapkin: -0.000000
+yearrice: -0.000000
+tierra: -0.000000
+peshawarislamabad: -0.000000
+readwatch: -0.000000
+starspangled: -0.000000
+policingwe: -0.000000
+foreheads: -0.000000
+relation: -0.000000
 Top 10 Important Features - Towards any class (Absolute Values):
-trumprussia: 0.012952
-washhere: 0.009994
-wedgies: 0.007377
-tudors: 0.006984
-republic7: 0.006348
-frida: 0.005947
-tolany: 0.005096
-american: 0.004926
-statemassachusetts: 0.004894
-aliens: 0.004744
-
+washhere: 0.015632
+tudorel: 0.012311
+statemassachusetts: 0.009105
+mondaiale: 0.008040
+wedisrupt: 0.007965
+trumprussia: 0.007540
+tolany: 0.007168
+obadiah: 0.007166
+frida: 0.006940
+reportedlocal: 0.006570
 ------------------------Decision Tree------------------------
-Decision Tree Accuracy (without bootstrapping): 0.8533407572383074
+Decision Tree Accuracy (without bootstrapping): 0.8534521158129176
 Decision Tree Average Accuracy over 20 Bootstraps: 0.85
-Decision Tree Cross Validation Score: 0.84
+Decision Tree Cross Validation Score: 0.86
 Decision Tree ROC AUC: 0.85
               precision    recall  f1-score   support
 
-           0       0.84      0.90      0.86      4696
-           1       0.88      0.81      0.84      4284
+           0       0.81      0.93      0.87      4696
+           1       0.91      0.77      0.83      4284
 
     accuracy                           0.85      8980
    macro avg       0.86      0.85      0.85      8980
-weighted avg       0.85      0.85      0.85      8980
+weighted avg       0.86      0.85      0.85      8980
 
 Descision Tree: Top 10 Important Features:
-jussi: 0.2107
-washhere: 0.1476
-miniskirts: 0.1378
-trumprussia: 0.1182
-likability: 0.0485
-governingincluded: 0.0376
-wipro: 0.0329
-wedgies: 0.0327
-didn: 0.0284
-thurlow: 0.0278
-
-Process finished with exit code 0
+jussi: 0.2124
+trumprussia: 0.1740
+minispeech: 0.1656
+washhere: 0.0871
+spokes: 0.0492
+capital: 0.0442
+ministerwhen: 0.0340
+wedisrupt: 0.0316
+dc: 0.0232
+possibly: 0.0216

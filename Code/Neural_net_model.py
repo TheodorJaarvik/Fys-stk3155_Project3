@@ -63,7 +63,8 @@ class TextClassifier:
         # removing the 'reuters' feature
 
         '''feature_names = self.vectorizer.get_feature_names_out()
-        indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters' and feature != 'trump' and feature != 'image' and feature != 'donald']
+        # additional features (and feature != 'trump' and feature != 'image' and feature != 'donald')
+        indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters']
         self.X_train_tfidf = self.X_train_tfidf[:, indices_to_keep]
         self.X_test_tfidf = self.X_test_tfidf[:, indices_to_keep]'''
 
@@ -122,7 +123,7 @@ class TextClassifier:
         plt.plot([0, 1], [0, 1], 'r--')
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title(f'ROC Curve - {model_name}')
+        plt.title(f'ROC Curve - {model_name} ')
         plt.legend(loc='lower right')
         plt.show()
 
@@ -133,7 +134,7 @@ class TextClassifier:
         sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d')
         plt.xlabel('Predicted')
         plt.ylabel('Actual')
-        plt.title(f'Confusion Matrix - {model_name}')
+        plt.title(f'Confusion Matrix - {model_name} ')
         plt.show()
 
     def bootstrap(self, model_name, model, num_bootstraps, num_samples):
@@ -183,7 +184,7 @@ class TextClassifier:
             plt.barh(features, importances, color=['green' if imp > 0 else 'red' for imp in importances])
             plt.gca().invert_yaxis()
             plt.xlabel('Coefficient Value')
-            plt.title('Top Positive and Negative Features (Logistic Regression)')
+            plt.title('Top Positive and Negative Features (Logistic Regression) ')
             plt.show()
 
         elif title == 'Neural Network':
@@ -212,7 +213,7 @@ class TextClassifier:
             plt.barh(abs_feature_names, abs_shap_values, align='center', color='blue')
             plt.gca().invert_yaxis()
             plt.xlabel('Mean Absolute SHAP Value (Feature Importance)')
-            plt.title('Top 10 Important Features by Absolute SHAP Value (Neural Network)')
+            plt.title('Top 10 Important Features by Absolute SHAP Value (Neural Network) ')
             plt.show()
 
         elif title == 'Decision Tree':
@@ -225,7 +226,7 @@ class TextClassifier:
             plt.barh(features, values, color='blue')
             plt.gca().invert_yaxis()
             plt.xlabel('Feature Importance (Impurity Decrease)')
-            plt.title('Decision Tree: Top Features by Absolute Importance')
+            plt.title('Decision Tree: Top Features by Absolute Importance ')
             plt.show()
 
         else:
