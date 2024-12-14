@@ -87,6 +87,8 @@ shap_values_mean = shap_values.mean(axis=(0, 2))
 abs_shap_values_mean = np.abs(shap_values).mean(axis=(0, 2))
 feature_importance = list(zip(feature_names, shap_values_mean))
 feature_importance_abs = list(zip(feature_names, abs_shap_values_mean))
+feature_importance.sort(key=lambda x: x[1], reverse=True)
+feature_importance_abs.sort(key=lambda x: x[1], reverse=True)
 
 print("Top 10 Important Features - Towards class True:")
 for feature, importance in feature_importance[:10]:

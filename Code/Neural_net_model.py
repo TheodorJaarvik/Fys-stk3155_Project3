@@ -63,7 +63,7 @@ class TextClassifier:
         # removing the 'reuters' feature
 
         '''feature_names = self.vectorizer.get_feature_names_out()
-        indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters']
+        indices_to_keep = [i for i, feature in enumerate(feature_names) if feature != 'reuters' and feature != 'trump' and feature != 'image' and feature != 'donald']
         self.X_train_tfidf = self.X_train_tfidf[:, indices_to_keep]
         self.X_test_tfidf = self.X_test_tfidf[:, indices_to_keep]'''
 
@@ -98,7 +98,7 @@ class TextClassifier:
 
        # Training the decision tree
 
-        self.dt = DecisionTreeClassifier(max_depth=10, min_samples_leaf=5)
+        self.dt = DecisionTreeClassifier(max_depth=8, min_samples_leaf=5)
         self.dt.fit(self.X_train_tfidf, self.y_train)
         self.y_pred_dt = self.dt.predict(self.X_test_tfidf)
 

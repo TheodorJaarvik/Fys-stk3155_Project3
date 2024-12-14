@@ -1,0 +1,151 @@
+------------------------Logistic Regression------------------------
+Logistic Regression Accuracy (without bootstrapping): 0.9868596881959911
+Logistic Regression Average Accuracy over 20 Bootstraps: 0.99
+Logistic Regression Cross Validation Score: [0.97772829 0.97494432 0.96993318 0.97717149 0.97216036]
+Logistic Regression Cross Validation Score: 0.97
+Logistic Regression ROC AUC: 0.99
+              precision    recall  f1-score   support
+
+           0       0.99      0.99      0.99      4696
+           1       0.98      0.99      0.99      4284
+
+    accuracy                           0.99      8980
+   macro avg       0.99      0.99      0.99      8980
+weighted avg       0.99      0.99      0.99      8980
+
+Top 10 Positive Features (drive prediction towards class 1):
+reuters: 29.251318
+trumps: 11.799996
+wednesday: 7.262213
+washington: 7.053494
+thursday: 6.498514
+tuesday: 6.278560
+friday: 5.949870
+monday: 5.811487
+minister: 5.160342
+statement: 5.000374
+
+Top 10 Negative Features (drive prediction towards class 0):
+image: -6.662705
+just: -6.614744
+america: -5.480825
+gop: -5.215002
+obama: -4.981933
+don: -4.874257
+hillary: -4.757454
+didn: -4.324995
+doesn: -4.217639
+ve: -4.169084
+
+------------------------Neural Network------------------------
+281/281 ━━━━━━━━━━━━━━━━━━━━ 4s 12ms/step
+Neural Network Accuracy (without bootstrapping): 0.994097995545657
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 13ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 13ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 13ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+32/32 ━━━━━━━━━━━━━━━━━━━━ 0s 12ms/step
+Neural Network Average Accuracy over 20 Bootstraps: 1.00
+Neural Network ROC AUC: 0.99
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99      4696
+           1       0.99      1.00      0.99      4284
+
+    accuracy                           0.99      8980
+   macro avg       0.99      0.99      0.99      8980
+weighted avg       0.99      0.99      0.99      8980
+
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/shap/explainers/_deep/deep_tf.py:99: UserWarning: Your TensorFlow version is newer than 2.4.0 and so graph support has been removed in eager mode and some static graphs may not be supported. See PR #1483 for discussion.
+  warnings.warn("Your TensorFlow version is newer than 2.4.0 and so graph support has been removed in eager mode and some static graphs may not be supported. See PR #1483 for discussion.")
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer
+Received: inputs=['Tensor(shape=(15, 203853))']
+  warnings.warn(msg)
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer
+Received: inputs=['Tensor(shape=(30, 203853))']
+  warnings.warn(msg)
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/keras/src/models/functional.py:237: UserWarning: The structure of `inputs` doesn't match the expected structure.
+Expected: input_layer
+Received: inputs=['Tensor(shape=(100, 203853))']
+  warnings.warn(msg)
+
+Top 10 Important Features - Towards class True:
+mr: 0.000000
+libyan: 0.000000
+lna: 0.000000
+fighters: 0.000000
+monday: 0.000000
+unbacked: 0.000000
+bennett: 0.000000
+tripoli: 0.000000
+haftar: 0.000000
+killed: 0.000000
+
+Bottom 10 Important Features - Towards class False:
+barack: -0.000000
+pipeline: -0.000000
+contest: -0.000000
+presidentelect: -0.000000
+president: -0.000000
+briefing: -0.000000
+section: -0.000000
+thursday: -0.000000
+benghazi: -0.000000
+trumps: -0.000000
+
+Top 10 Important Features - Towards any class (Absolute Values):
+reuters: 0.027557
+washington: 0.009392
+trumps: 0.008116
+monday: 0.006987
+spokesman: 0.006441
+thats: 0.006367
+obama: 0.005737
+thursday: 0.005399
+ministry: 0.005162
+republican: 0.004968
+
+------------------------Decision Tree------------------------
+Decision Tree Accuracy (without bootstrapping): 0.9947661469933184
+Decision Tree Average Accuracy over 20 Bootstraps: 0.99
+Decision Tree Cross Validation Score: 0.99
+Decision Tree ROC AUC: 0.99
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99      4696
+           1       0.99      1.00      0.99      4284
+
+    accuracy                           0.99      8980
+   macro avg       0.99      0.99      0.99      8980
+weighted avg       0.99      0.99      0.99      8980
+
+Descision Tree: Top 10 Important Features:
+reuters: 0.9883
+21wire: 0.0021
+image: 0.0014
+doesn: 0.0012
+saidthe: 0.0011
+caledonia: 0.0009
+actually: 0.0008
+partys: 0.0006
+subscribing: 0.0006
+clintonthe: 0.0005
+
+Process finished with exit code 0
