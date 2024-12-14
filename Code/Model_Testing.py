@@ -1,12 +1,13 @@
 import keras
 import numpy as np
-import pandas as pd
 from sklearn.metrics import accuracy_score, classification_report, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
 from Neural_net_model import TextClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import plot_tree
 from joblib import load
+import shap
+
 
 lr_model = load('../Models/lr_fake_news_classifier.joblib')
 nn_model = keras.models.load_model('../Models/nn_fake_news_classifier.keras')
@@ -35,11 +36,29 @@ print(f'Logistic Regression ROC AUC: {roc_auc_lr:.2f}')
 print(classification_report_lr)
 y_prob_lr = lr_model.predict_proba(data.X_test_tfidf)[:,1]
 
+
+#feature importance
+feature_importance = lr_model.coef_[0]
+feature_names = data.vectorizer.get_feature_names_out()
+feature_importance = list(zip(feature_names, feature_importance))
+
+positive_features = [item for item in feature_importance if item[1] > 0]
+negative_features = [item for item in feature_importance if item[1] < 0]
+positive_features.sort(key=lambda x: x[1], reverse=True)
+negative_features.sort(key=lambda x: x[1])
+
+print('Top 10 Positive Features (drive prediction towards class 1):')
+for feature, importance in positive_features[:10]:
+    print(f'{feature}: {importance:.6f}')
+
+print('\nTop 10 Negative Features (drive prediction towards class 0):')
+for feature, importance in negative_features[:10]:
+    print(f'{feature}: {importance:.6f}')
+
 # Plots
 data.plot_roc_curve(model_name="Logistic Regression", y_pred_prob=y_prob_lr)
 data.plot_confusion_matrix(model_name="Logistic Regression", y_pred=y_pred_lr)
-
-
+data.plot_feature_importance(feature_importance, title="Logistic Regression")
 
 print('------------------------Neural Network------------------------')
 
@@ -56,10 +75,36 @@ roc_auc_nn = roc_auc_score(data.y_test, y_pred_nn_binary)
 print(f'Neural Network ROC AUC: {roc_auc_nn:.2f}')
 print(classification_report_nn)
 
+# feature importance
+background_data = shap.sample(data.X_test_tfidf, 15)
+test_subset = shap.sample(data.X_test_tfidf, 100)
+background_data_dense = background_data.toarray()
+test_subset_dense = shap.sample(data.X_test_tfidf, 100).toarray()
+explainer = shap.DeepExplainer(nn_model, background_data_dense)
+shap_values = explainer.shap_values(test_subset_dense)
+feature_names = data.vectorizer.get_feature_names_out()
+shap_values_mean = shap_values.mean(axis=(0, 2))
+abs_shap_values_mean = np.abs(shap_values).mean(axis=(0, 2))
+feature_importance = list(zip(feature_names, shap_values_mean))
+feature_importance_abs = list(zip(feature_names, abs_shap_values_mean))
+
+print("Top 10 Important Features - Towards class True:")
+for feature, importance in feature_importance[:10]:
+    print(f"{feature}: {importance:.6f}")
+
+print("Bottom 10 Important Features - Towards class False:")
+for feature, importance in feature_importance[-10:]:
+    print(f"{feature}: {importance:.6f}")
+
+print("Top 10 Important Features - Towards any class (Absolute Values):")
+for feature, importance in feature_importance_abs[:10]:
+    print(f"{feature}: {importance:.6f}")
+
 # Plots
 data.plot_roc_curve(model_name="Neural Network", y_pred_prob=y_pred_nn[:,1])
 data.plot_confusion_matrix(model_name="Neural Network", y_pred=y_pred_nn_binary)
-
+data.plot_feature_importance(feature_importance, title="Neural Network")
+data.plot_feature_importance(feature_importance_abs, title="Neural Network absolute")
 
 print('------------------------Decision Tree------------------------')
 
@@ -77,16 +122,7 @@ roc_auc_dt = roc_auc_score(data.y_test, y_pred_dt)
 print(f'Decision Tree ROC AUC: {roc_auc_dt:.2f}')
 print(classification_report_dt)
 
-# Plots
-y_prob_dt = dt_model.predict_proba(data.X_test_tfidf)[:,1]
-data.plot_roc_curve(model_name="Decision Tree", y_pred_prob=y_prob_dt)
-data.plot_confusion_matrix(model_name="Decision Tree", y_pred=y_pred_dt)
-
-# Tree Plot
-plot_tree(dt_model, feature_names=data.vectorizer.get_feature_names_out(), class_names=['Class 0', 'Class 1'], filled=True)
-plt.show()
-
-# Top 10 Important Features
+#Feature importance
 importances = dt_model.feature_importances_
 feature_names = data.vectorizer.get_feature_names_out()
 feature_importance = list(zip(feature_names, importances))
@@ -95,6 +131,14 @@ sorted_importance = sorted(feature_importance, key=lambda x: x[1], reverse=True)
 print("Descision Tree: Top 10 Important Features:")
 for feature, score in sorted_importance[:10]:
     print(f"{feature}: {score:.4f}")
+
+# Plots
+y_prob_dt = dt_model.predict_proba(data.X_test_tfidf)[:,1]
+data.plot_roc_curve(model_name="Decision Tree", y_pred_prob=y_prob_dt)
+data.plot_confusion_matrix(model_name="Decision Tree", y_pred=y_pred_dt)
+plot_tree(dt_model, feature_names=feature_names, class_names=['Class 0', 'Class 1'], filled=True)
+plt.show()
+data.plot_feature_importance(feature_importance, title="Decision Tree")
 
 
 

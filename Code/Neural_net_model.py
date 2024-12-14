@@ -164,6 +164,75 @@ class TextClassifier:
         accuracy_avg = np.mean(accuracy_bootstraps)
         return accuracy_avg
 
+    def plot_feature_importance(self,feature_importance, title="Feature Importance"):
+
+        if title == 'Logistic Regression':
+
+            positive_features = [item for item in feature_importance if item[1] > 0]
+            negative_features = [item for item in feature_importance if item[1] < 0]
+
+            positive_features.sort(key=lambda x: x[1], reverse=True)
+            negative_features.sort(key=lambda x: x[1])
+
+            top_positive = positive_features[:10]
+            top_negative = negative_features[:10]
+            features = [item[0] for item in top_positive + top_negative]
+            importances = [item[1] for item in top_positive + top_negative]
+
+            plt.figure(figsize=(12, 6))
+            plt.barh(features, importances, color=['green' if imp > 0 else 'red' for imp in importances])
+            plt.gca().invert_yaxis()
+            plt.xlabel('Coefficient Value')
+            plt.title('Top Positive and Negative Features (Logistic Regression)')
+            plt.show()
+
+        elif title == 'Neural Network':
+            feature_importance.sort(key=lambda x: x[1], reverse=True)
+            top_positive_features = [item for item in feature_importance if item[1] > 0][:10]
+            top_negative_features = [item for item in feature_importance if item[1] < 0][-10:]
+            combined_features = top_positive_features + top_negative_features
+            combined_feature_names = [f[0] for f in combined_features]
+            combined_shap_values = [f[1] for f in combined_features]
+
+            plt.figure(figsize=(12, 8))
+            colors = ['green' if value > 0 else 'red' for value in combined_shap_values]
+            plt.barh(combined_feature_names, combined_shap_values, color=colors, align='center')
+            plt.gca().invert_yaxis()
+            plt.xlabel('SHAP Value (Feature Importance)')
+            plt.title('Top 10 Positive and Negative Features (Neural Network)')
+            plt.show()
+
+        elif title == 'Neural Network absolute':
+            feature_importance.sort(key=lambda x: x[1], reverse=True)
+            top_features_abs = feature_importance[:10]
+            abs_feature_names = [f[0] for f in top_features_abs]
+            abs_shap_values = [f[1] for f in top_features_abs]
+
+            plt.figure(figsize=(12, 8))
+            plt.barh(abs_feature_names, abs_shap_values, align='center', color='blue')
+            plt.gca().invert_yaxis()
+            plt.xlabel('Mean Absolute SHAP Value (Feature Importance)')
+            plt.title('Top 10 Important Features by Absolute SHAP Value (Neural Network)')
+            plt.show()
+
+        elif title == 'Decision Tree':
+
+            sorted_importance = sorted(feature_importance, key=lambda x: x[1], reverse=True)[:10]
+            features = [item[0] for item in sorted_importance]
+            values = [item[1] for item in sorted_importance]
+
+            plt.figure(figsize=(12, 8))
+            plt.barh(features, values, color='blue')
+            plt.gca().invert_yaxis()
+            plt.xlabel('Feature Importance (Impurity Decrease)')
+            plt.title('Decision Tree: Top Features by Absolute Importance')
+            plt.show()
+
+        else:
+            print("Invalid title. Please choose 'Logistic Regression', 'Neural Network', 'Decision Tree', or 'Neural Network absolute'.")
+
+
+
 
 
 
