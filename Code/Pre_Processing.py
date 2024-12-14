@@ -26,7 +26,7 @@ class Processing:
         df_final = pd.concat([df_filtered, df_filtered_true])
         df_final = df_final.sample(frac=1).reset_index(drop=True)
 
-        df_final.to_csv('../data/df_final.csv', index=False)
+        df_final.to_csv('data/df_final.csv', index=False)
 
 
 

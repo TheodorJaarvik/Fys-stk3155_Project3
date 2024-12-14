@@ -104,9 +104,9 @@ class TextClassifier:
         self.y_pred_dt = self.dt.predict(self.X_test_tfidf)
 
     def save_model(self, file_path):
-        if file_path == '../Models/lr_fake_news_classifier.joblib':
+        if file_path == 'Models/lr_fake_news_classifier.joblib':
             dump(self.lr, file_path)
-        elif file_path == '../Models/dt_fake_news_classifier.joblib':
+        elif file_path == 'Models/dt_fake_news_classifier.joblib':
             dump(self.dt, file_path)
         else:
             self.model.save(file_path)

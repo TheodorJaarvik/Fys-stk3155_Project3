@@ -1,6 +1,6 @@
 import keras
 import numpy as np
-from sklearn.metrics import accuracy_score, classification_report, roc_auc_score, roc_curve
+from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
 import matplotlib.pyplot as plt
 from Neural_net_model import TextClassifier
 from sklearn.model_selection import cross_val_score
@@ -9,11 +9,11 @@ from joblib import load
 import shap
 
 
-lr_model = load('../Models/lr_fake_news_classifier.joblib')
-nn_model = keras.models.load_model('../Models/nn_fake_news_classifier.keras')
-dt_model = load('../Models/dt_fake_news_classifier.joblib')
+lr_model = load('Models/lr_fake_news_classifier.joblib')
+nn_model = keras.models.load_model('Models/nn_fake_news_classifier.keras')
+dt_model = load('Models/dt_fake_news_classifier.joblib')
 
-data = TextClassifier('../data/df_final.csv')
+data = TextClassifier('data/df_final.csv')
 data.vectorize_text()
 
 num_bootstraps = 20
