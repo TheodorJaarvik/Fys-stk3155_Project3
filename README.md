@@ -18,14 +18,14 @@ The packages and frameworks needed to run this project is:
 
 Python Libraries:
 
--pandas (imported as pd)
--numpy (imported as np)
--matplotlib.pyplot (imported as plt)
--seaborn (imported as sns)
--scikit-learn (imported as sklearn)
--keras (imported as keras)
--joblib (imported as joblib)
--shap (imported as shap)
+- pandas (imported as pd)
+- numpy (imported as np)
+- matplotlib.pyplot (imported as plt)
+- seaborn (imported as sns)
+- scikit-learn (imported as sklearn)
+- keras (imported as keras)
+- joblib (imported as joblib)
+- shap (imported as shap)
 
 Scikit-learn Modules:
 
